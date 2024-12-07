@@ -1,0 +1,2 @@
+vhdl work "cpu_module.vhd"
+vhdl work "cpu_module_tb.vhd"
