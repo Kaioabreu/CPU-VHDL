@@ -102,6 +102,7 @@ begin
 			REG_WE	=> REG_WE,
 			PC_WE		=> PC_WE
 		);
+
 	
 
 end Behavioral;

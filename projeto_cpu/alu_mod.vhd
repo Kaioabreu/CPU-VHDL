@@ -54,13 +54,13 @@ begin
 				temp_result := SIGNED(A) + SIGNED(B);
 				Y <= STD_LOGIC_VECTOR(temp_result(15 downto 0));
 				carry_out <= temp_result(16);
-				--overflow <= ?? Buguei em como fazer
+				overflow <= NOT (A(15) XOR B(15)) AND (A(15) XOR Z(15));
 				
 			when aSUB => --Subtração
 				temp_result := SIGNED(A) - SIGNED(B);
             Y <= STD_LOGIC_VECTOR(temp_result(15 downto 0));
             carry_out <= temp_result(16);
-				--overflow <= ?? Buguei em como fazer
+				overflow <= (A(15) XOR B(15)) AND (A(15) XOR Z(15));
 				
 			when aMOV => --MOVE
 				y <= A;
