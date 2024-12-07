@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2024-12-07T17:56:17</DateModified>
+  <DateModified>2024-12-07T16:11:59</DateModified>
   <ModuleName>cpu_module</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
-  <SavedFilePath>/home/ise/projeto_cpu/iseconfig/cpu_module.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>/home/ise/projeto_cpu/</ImplementationReportsDirectory>
+  <SavedFilePath>/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/iseconfig/cpu_module.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/</ImplementationReportsDirectory>
   <DateInitialized>2024-12-06T20:18:39</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

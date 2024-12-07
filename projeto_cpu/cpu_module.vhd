@@ -79,6 +79,17 @@ architecture Behavioral of cpu_module is
 		PC_WE		: out STD_LOGIC
 	);
 	end component;
+	
+	 component RAM_64kx16 is
+      Port(
+         CLK    : in  std_logic;
+         DIN    : in  std_logic_vector(15 downto 0);
+         ADDR   : in  std_logic_vector(15 downto 0);
+         WE     : in  std_logic;
+         DOUT   : out std_logic_vector(15 downto 0);
+         POS_SP : out std_logic_vector(15 downto 0)
+      );
+   end component;
 
 begin
 
@@ -103,7 +114,15 @@ begin
 			PC_WE		=> PC_WE
 		);
 
-	
+	u_RAM : entity work.RAM_64kx16(rtl)
+      port map(
+         CLK    => CLK,
+         DIN    => RAM_DIN,    -- Dados que a CPU escreve na RAM
+         ADDR   => RAM_ADDR,   -- Endereço fornecido pela CPU
+         WE     => RAM_WE,     -- Sinal de escrita controlado pela CU
+         DOUT   => RAM_DOUT,   -- Dados lidos da RAM
+         POS_SP => POS_SP_reg  -- Podemos monitorar se necessário
+      );
 
 end Behavioral;
 
