@@ -62,6 +62,8 @@
     <transform xil_pn:end_ts="1733675071" xil_pn:in_ck="-6970969715275118798" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1733675071">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputAdded"/>
       <outfile xil_pn:name="alu_mod.vhd"/>
       <outfile xil_pn:name="control_unit_mod.vhd"/>
       <outfile xil_pn:name="cpu_module.vhd"/>
@@ -87,6 +89,7 @@
     <transform xil_pn:end_ts="1733675073" xil_pn:in_ck="-6970969715275118798" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1733675073">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="alu_mod.vhd"/>
       <outfile xil_pn:name="control_unit_mod.vhd"/>
       <outfile xil_pn:name="cpu_module.vhd"/>
@@ -100,6 +103,7 @@
     <transform xil_pn:end_ts="1733675572" xil_pn:in_ck="-6970969715275118798" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-1604413538578049394" xil_pn:start_ts="1733675571">
       <status xil_pn:value="FailedRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
     </transform>
     <transform xil_pn:end_ts="1733609370" xil_pn:in_ck="946478124447551036" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="875450760001919042" xil_pn:start_ts="1733609370">
       <status xil_pn:value="AbortedRun"/>
@@ -140,6 +144,8 @@
     <transform xil_pn:end_ts="1733676797" xil_pn:in_ck="-2917844042654072197" xil_pn:name="TRANEXT_xstsynthesize_spartan3e" xil_pn:prop_ck="-1612257235437384587" xil_pn:start_ts="1733676795">
       <status xil_pn:value="FailedRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputAdded"/>
       <outfile xil_pn:name="_xmsgs/xst.xmsgs"/>
       <outfile xil_pn:name="cpu_module.lso"/>
       <outfile xil_pn:name="cpu_module.prj"/>
