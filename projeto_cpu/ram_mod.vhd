@@ -8,128 +8,88 @@
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
--- Description: 
+-- Description: Updated RAM Module for Integration
 --
 -- Dependencies: 
 --
 -- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
+-- Revision 0.02 - File Updated
+-- Additional Comments: Added support for LCD integration and consistent signal handling
 --
 ----------------------------------------------------------------------------------
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use work.libcpu.all; -- uso do pacote libcpu para addr_SP e tipos
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
-entity RAM_64kx16 is
-    Port(
-        CLK    : in  std_logic;
-        DIN    : in  std_logic_vector(15 downto 0);
-        ADDR   : in  std_logic_vector(15 downto 0);
-        WE     : in  std_logic;
-        DOUT   : out std_logic_vector(15 downto 0);
-        POS_SP : out std_logic_vector(15 downto 0)
+entity RAM_8x8192 is
+    port (
+        CLK      : in std_logic;
+        DIN      : in std_logic_vector(15 downto 0);
+        ADDR     : in std_logic_vector(12 downto 0); -- 13 bits para 8192 palavras
+        WE       : in std_logic;
+        DOUT     : out std_logic_vector(15 downto 0);
+        POS_255  : out std_logic_vector(15 downto 0)  -- Valor fixo para endereço 255
     );
-end RAM_64kx16;
+end RAM_8x8192;
 
-architecture rtl of RAM_64kx16 is
-
-    type RAM_t is array(0 to 65535) of std_logic_vector(15 downto 0);
-
-    -- Inicialização da memória:
-    -- * Endereços 0x0000 - 0x0008: periféricos mapeados (btn, enc, kdr, udr, usr, led, ssd, ldr, lcr).
-    --   Inicialmente todos zero. Em tempo de execução, o processador lerá/escreverá neles.
-    --
-    -- * A execução começa em 0x0010. Vamos colocar o exemplo do simple.asm, 
-    --   conforme gerado por as-puc16:
-    --   
-    --   simple.asm:
-    --   16 => "0000000000000000", -- mov r0, 0
-    --   17 => "1001000000000001", -- add r0, r0, 1
-    --   18 => "0010000011111110", -- b @loop
-    --
-    -- * Caso precisemos colocar dados do hello.c em 0x1000 (4096), usando 
-    --   a saída do compilador (exemplo do data a partir de 4096):
-    --   4096 => "0000000001001000", -- .dw 72 ('H')
-    --   4097 => "0000000001100101", -- .dw 101 ('e')
-    --   4098 => "0000000001101100", -- .dw 108 ('l')
-    --   ... e assim por diante
-    --
-    -- * O restante da memória será inicializado com zeros.
-
-    constant addr_SP : std_logic_vector(15 downto 0) := x"1FFF"; -- Topo da pilha
-
+architecture Behavioral of RAM_8x8192 is
+    
+    type RAM_t is array(0 to 8191) of std_logic_vector(15 downto 0);
     signal ram : RAM_t := (
-        -- I/O mapeado (0x0000 a 0x0008):
-        0 => (others => '0'), -- btn
-        1 => (others => '0'), -- enc
-        2 => (others => '0'), -- kdr
-        3 => (others => '0'), -- udr
-        4 => (others => '0'), -- usr
-        5 => (others => '0'), -- led
-        6 => (others => '0'), -- ssd
-        7 => (others => '0'), -- ldr
-        8 => (others => '0'), -- lcr
-
-        -- Espaço até 0x000F (15 decimal):
-        9 to 15 => (others => '0'), 
-
-        -- Instruções do simple.asm começando em 0x0010 (decimal 16):
-        16 => "0000000000000000", -- mov r0,0
-        17 => "1001000000000001", -- add r0,r0,1
-        18 => "0010000011111110", -- b @loop
-        
-        -- Espaço entre 19 e 4095 livre:
-        19 to 4095 => (others => '0'),
-
-        -- Exemplo de dados do hello.c (não obrigatório, só ilustrando):
-        4096 => "0000000001001000", -- 'H' (72)
-        4097 => "0000000001100101", -- 'e' (101)
-        4098 => "0000000001101100", -- 'l' (108)
-        4099 => "0000000001101100", -- 'l' (108)
-        4100 => "0000000001101111", -- 'o' (111)
-        4101 => "0000000000101100", -- ',' (44)
-        4102 => "0000000000100000", -- ' ' (32)
-        4103 => "0000000001110111", -- 'w' (119)
-        4104 => "0000000001101111", -- 'o' (111)
-        4105 => "0000000001110010", -- 'r' (114)
-        4106 => "0000000001101100", -- 'l' (108)
-        4107 => "0000000001100100", -- 'd' (100)
-        4108 => "0000000000100001", -- '!' (33)
-        4109 => "0000000000000000", -- 0 terminador da string
-
-        -- Resto da memória até 0x1FFE:
-        4110 to 8190 => (others => '0'),
-
-        -- O topo da pilha em 0x1FFF (8191 decimal), podemos deixar zero inicialmente:
-        8191 => (others => '0'),
-
-        -- Demais endereços, caso algum seja necessário:
-        8192 to 65535 => (others => '0')
+        0 => "0000000000000001", -- add     Ra Rb                   -- Ra = 17
+        1 => "0000000000000011", -- add     Ra Rd (overflow)        -- Ra = 15
+        2 => "0001000000000001", -- sub     Ra Rb                   -- Ra = 0
+        3 => "0010000000000000", -- inc     Ra                      -- Ra = 1
+        4 => "0010000000000000", -- inc     Ra                      -- Ra = 2
+        5 => "0010010100000000", -- dec     Rb                      -- Rb = 14
+        6 => "0010000100000000", -- dec     Ra                      -- Ra = 1
+        7 => "0011000100000001", -- and     Ra Rb                   -- Ra = 0
+        8 => "0100001100000000", -- or      Ra Rd                   -- Ra = 254
+        9 => "0100001100000000", -- or      Ra Rd                   -- Ra = 254
+        10 => "1000000000000000", -- push   Ra      
+        11 => "1000010000000000", -- push   Rb      
+        12 => "1000100000000000", -- push   Rc      
+        13 => "1000000100000000", -- pop    Ra                      -- Ra = 68
+        14 => "1000100100000000", -- pop    Rc                      -- Rc = 14
+        15 => "1000001000000000", -- st     Ra 0x--     
+        16 => "0000000000000000", -- [COMP st]      
+        17 => "1000001100000000", -- ld     Ra 0x--     
+        18 => "0000000000000001", -- [COMP lt]                      -- Ra = 3
+        19 => "1001001000000000", -- ldr    Ra Rc                   -- Ra = 137
+        20 => "1010001100000000", -- str    Ra Rd                   -- MEM[Rd = 254] = 137
+        21 => "1011000100000000", -- mov    Ra Rb                   -- Ra = 14
+        22 => "1100000000000000", -- jmp    0x--   (jmp para 25)
+        23 => "1000000000000000", -- [COMP jmp]    (ponteiro)
+        24 => "0010000000000000", -- inc    Ra [NO DEVE SER EXEC]  -- Ra = 15 / Ra = 14
+        25 => "0000000000000000", -- add    Ra Ra                   -- Ra = 28
+        26 => "0000000000000000", -- add    Ra Ra                   -- Ra = 56
+        27 => "1100000100000000", -- jmpr   Ra
+        28 => "0010000000000000", -- inc    Ra [NO DEVE SER EXEC]  -- Ra = 57 / Ra = 56
+        56 => "0010000100000000", -- dec    Ra                      -- Ra = 55
+        57 => "1000111000000000", -- st     Rd 0x--
+        58 => "1111111111111111", -- [COMP st POS 255]
+        59 => "1000001000000000", -- st     Ra 0x--
+        60 => "1111111111111111", -- [COMP st POS 255]
+        128 => "0001100100000000", -- Exemplo de dado adicional
+        255 => "1111111111111111", -- Conteúdo para POS_255 (fixo)
+        others => "1111000011110000" -- Dados default
     );
 
-    signal read_address : std_logic_vector(15 downto 0) := (others => '0');
+    signal read_address : std_logic_vector(12 downto 0) := (others => '0');
 
 begin
 
-    -- Processo síncrono na borda de descida do CLK:
-    -- Se WE='1', escrevemos DIN no endereço ADDR.
-    -- Também atualizamos read_address para leitura síncrona.
     process(CLK)
     begin
-        if falling_edge(CLK) then
+        if rising_edge(CLK) then
             if WE = '1' then
-                ram(to_integer(unsigned(ADDR))) <= DIN;
+                ram(to_integer(unsigned(ADDR))) <= DIN; -- Escrita na memória
             end if;
-            read_address <= ADDR;
+            read_address <= ADDR; -- Atualização do endereço de leitura
         end if;
     end process;
 
-    -- A saída DOUT apresenta o dado da RAM no endereço read_address registrado:
-    DOUT <= ram(to_integer(unsigned(read_address)));
+    DOUT <= ram(to_integer(unsigned(read_address))); -- Saída dos dados
+    POS_255 <= ram(255); -- Retornar conteúdo do endereço fixo 255
 
-    -- POS_SP retorna o conteúdo no endereço do stack pointer, útil para debug:
-    POS_SP <= ram(to_integer(unsigned(addr_SP)));
-
-end rtl;
+end Behavioral;
