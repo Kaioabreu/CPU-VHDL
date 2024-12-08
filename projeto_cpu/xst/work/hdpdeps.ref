@@ -1,0 +1,54 @@
+V3 26
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd 2024/12/08.11:13:13 P.20131013
+EN work/alu_mod 1733676799 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd \
+      PB ieee/std_logic_1164 1381692176 PB work/libcpu 1733676798 \
+      PB ieee/NUMERIC_STD 1381692181
+AR work/alu_mod/Behavioral 1733676800 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd \
+      EN work/alu_mod 1733676799
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/control_unit_mod.vhd 2024/12/08.11:13:13 P.20131013
+EN work/control_unit_mod 1733676801 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/control_unit_mod.vhd \
+      PB ieee/std_logic_1164 1381692176 PB work/libcpu 1733676798 \
+      PB ieee/NUMERIC_STD 1381692181
+AR work/control_unit_mod/Behavioral 1733676802 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/control_unit_mod.vhd \
+      EN work/control_unit_mod 1733676801
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.vhd 2024/12/08.13:06:40 P.20131013
+EN work/cpu_module 0 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 \
+      PB work/libcpu 1733676798
+AR work/cpu_module/Behavioral 0 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.vhd \
+      EN work/cpu_module 0 CP work/alu_mod CP work/control_unit_mod \
+      CP work/RAM_8x8192 CP work/lcd_mod CP work/teclado_mod
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/lcd_mod.vhd 2024/12/08.13:23:04 P.20131013
+EN work/lcd_mod 1733676805 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/lcd_mod.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/lcd_mod/Behavioral 1733676806 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/lcd_mod.vhd \
+      EN work/lcd_mod 1733676805
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/libcpu.vhd 2024/12/07.16:11:15 P.20131013
+PH work/libcpu 1733676797 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/libcpu.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+PB work/libcpu 1733676798 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/libcpu.vhd \
+      PH work/libcpu 1733676797
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/ram_mod.vhd 2024/12/08.11:18:25 P.20131013
+EN work/RAM_8x8192 1733676803 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/ram_mod.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/RAM_8x8192/Behavioral 1733676804 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/ram_mod.vhd \
+      EN work/RAM_8x8192 1733676803
+FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/teclado_mod.vhd 2024/12/08.11:26:43 P.20131013
+EN work/teclado_mod 1733676807 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/teclado_mod.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/teclado_mod/Behavioral 1733676808 \
+      FL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/teclado_mod.vhd \
+      EN work/teclado_mod 1733676807

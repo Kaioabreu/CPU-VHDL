@@ -1,0 +1,7 @@
+vhdl work "libcpu.vhd"
+vhdl work "teclado_mod.vhd"
+vhdl work "ram_mod.vhd"
+vhdl work "lcd_mod.vhd"
+vhdl work "control_unit_mod.vhd"
+vhdl work "alu_mod.vhd"
+vhdl work "cpu_module.vhd"

@@ -1,5 +1,25 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+library work;
+use work.libcpu.all;
+
+entity cpu_module is
+    Port (
+        CLK        : in  STD_LOGIC;
+        RESET      : in  STD_LOGIC;
+        PS2_DATA   : in  STD_LOGIC;
+        PS2_CLK    : in  STD_LOGIC;
+        lcd_e      : out STD_LOGIC;
+        lcd_rs     : out STD_LOGIC;
+        lcd_rw     : out STD_LOGIC;
+        sf_d       : out STD_LOGIC_VECTOR(3 downto 0)
+    );
+end cpu_module;
+
 architecture Behavioral of cpu_module is
-    -- Registradores
+
     signal PC         : word := (others => '0'); -- Program Counter
     signal IR         : word; -- Instruction Register
     signal DATA_BUS   : word; -- Barramento de dados
@@ -27,7 +47,7 @@ architecture Behavioral of cpu_module is
 begin
 
     -- ALU Instância
-    alu_inst : alu_mod
+    alu_inst : entity work.alu_mod
         Port map (
             A         => ALU_A,
             B         => ALU_B,
@@ -37,11 +57,12 @@ begin
         );
 
     -- Unidade de Controle Instância
-    cu_inst : control_unit_mod
+    cu_inst : entity work.control_unit_mod
         Port map(
             CLK      => CLK,
             RESET    => RESET,
             IR       => IR,
+            PC       => PC, -- Conexão do Program Counter
             FLAGS    => ALU_FLAGS,
             ALU_CTRL => ALU_CTRL,
             RAM_WE   => RAM_WE,
@@ -50,7 +71,7 @@ begin
         );
 
     -- RAM Instância
-    u_RAM : RAM_8x8192
+    u_RAM : entity work.RAM_8x8192
         Port map(
             CLK     => CLK,
             DIN     => RAM_DATA,   
@@ -61,7 +82,7 @@ begin
         );
 
     -- LCD Instância
-    u_lcd : lcd_mod
+    u_lcd : entity work.lcd_mod
         port map(
             clk     => CLK,
             reset   => RESET,
@@ -70,14 +91,16 @@ begin
             lcd_rw  => lcd_rw,
             sf_d    => sf_d,
             ir      => lcd_ir,
-            pos_255 => lcd_pos_255(7 downto 0) -- Passando apenas os bits relevantes
+            pos_255 => lcd_pos_255
         );
 
     -- Teclado Instância
-    teclado_inst : teclado_mod
+    teclado_inst : entity work.teclado_mod
         port map(
             PS2_DATA => PS2_DATA,   
             PS2_CLK  => PS2_CLK,    
+            CLK      => CLK,
+            RESET    => RESET,
             tecla    => tecla_ps2,  
             valido   => tecla_valida 
         );

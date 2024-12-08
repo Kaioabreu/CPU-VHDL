@@ -1,0 +1,13 @@
+AR control_unit_mod behavioral /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/control_unit_mod.vhd sub00/vhpl05 1733676802
+EN control_unit_mod NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/control_unit_mod.vhd sub00/vhpl04 1733676801
+EN teclado_mod NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/teclado_mod.vhd sub00/vhpl10 1733676807
+EN lcd_mod NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/lcd_mod.vhd sub00/vhpl08 1733676805
+EN cpu_module NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.vhd sub00/vhpl12 1733676809
+AR teclado_mod behavioral /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/teclado_mod.vhd sub00/vhpl11 1733676808
+PH libcpu NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/libcpu.vhd sub00/vhpl00 1733676797
+PB libcpu libcpu /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/libcpu.vhd sub00/vhpl01 1733676798
+AR alu_mod behavioral /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd sub00/vhpl03 1733676800
+EN alu_mod NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd sub00/vhpl02 1733676799
+AR lcd_mod behavioral /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/lcd_mod.vhd sub00/vhpl09 1733676806
+AR ram_8x8192 behavioral /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/ram_mod.vhd sub00/vhpl07 1733676804
+EN ram_8x8192 NULL /home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/ram_mod.vhd sub00/vhpl06 1733676803

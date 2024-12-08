@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2024-12-07T22:46:27</DateModified>
+  <DateModified>2024-12-08T13:53:44</DateModified>
   <ModuleName>cpu_module</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/iseconfig/cpu_module.xreport</SavedFilePath>

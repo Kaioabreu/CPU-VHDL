@@ -1,0 +1,5 @@
+xst -intstyle ise -ifn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.xst" -ofn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.syr" 
+xst -intstyle ise -ifn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.xst" -ofn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.syr" 
+xst -intstyle ise -ifn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.xst" -ofn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.syr" 
+xst -intstyle ise -ifn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.xst" -ofn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.syr" 
+xst -intstyle ise -ifn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.xst" -ofn "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.syr" 
