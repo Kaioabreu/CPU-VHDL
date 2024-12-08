@@ -89,7 +89,7 @@ BEGIN
 
         -- Ativa o RESET
         RESET <= '1';
-        wait for 20 ns;
+        wait for 100 ns;
 
         -- Desativa o RESET
         RESET <= '0';

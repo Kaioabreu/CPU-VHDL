@@ -1,1 +1,5 @@
+work	"alu_mod.vhd"
+work	"control_unit_mod.vhd"
 work	"cpu_module.vhd"
+work	"libcpu.vhd"
+work	"register_unit_mod.vhd"

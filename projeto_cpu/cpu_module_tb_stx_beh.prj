@@ -1,0 +1,6 @@
+vhdl isim_temp "libcpu.vhd"
+vhdl isim_temp "register_unit_mod.vhd"
+vhdl isim_temp "control_unit_mod.vhd"
+vhdl isim_temp "alu_mod.vhd"
+vhdl isim_temp "cpu_module.vhd"
+vhdl isim_temp "cpu_module_tb.vhd"

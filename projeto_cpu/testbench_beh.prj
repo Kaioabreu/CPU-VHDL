@@ -1,0 +1,6 @@
+vhdl work "libcpu.vhd"
+vhdl work "register_unit_mod.vhd"
+vhdl work "control_unit_mod.vhd"
+vhdl work "alu_mod.vhd"
+vhdl work "cpu_module.vhd"
+vhdl work "cpu_testbench.vhd"

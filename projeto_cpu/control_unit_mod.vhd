@@ -19,6 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.libcpu.all;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -35,11 +37,13 @@ entity control_unit_mod is
 		RESET		: in STD_LOGIC;
 		IR			: in word;
 		FLAGS		: in STD_LOGIC_VECTOR(3 downto 0);
+		PC			: in word;
 		
 		ALU_CTRL	: out ALUOpT;
 		RAM_WE	: out STD_LOGIC;
 		REG_WE	: out STD_LOGIC;
-		PC_WE		: out STD_LOGIC
+		PC_WE		: out STD_LOGIC;
+		PC_NEXT 	: out word
 	);
 end control_unit_mod;
 
@@ -65,54 +69,82 @@ begin
 	process(CLK, RESET)
 	begin
 		if RESET ='1' then
-			state <= FETCH;
+			STATE <= FETCH;
 			ALU_CTRL <= aMOV;
-			mem_we <= '0';
-			reg_we <= '0';
-			pc_we <= '0';
+			RAM_WE <= '0';
+			REG_wE <= '0';
+			PC_WE <= '0';
 			
 		elsif rising_edge(CLK) then
-			case state is
+			case STATE is
 				when FETCH =>
-					pc_we <= '1';
-					mem_we <= '0';
-					reg_we <= '0';
-					state <= DECODE;
+					PC_WE <= '1';
+					PC_NEXT <= STD_LOGIC_VECTOR(unsigned(PC) + 1);
+					RAM_WE <= '0';
+					REG_WE <= '0';
+					STATE <= DECODE;
 					
 				when DECODE =>
 					case grop is
-						when goADD | goLDR | goSTR =>
-							ALU_CTRL <= aADD;
-						when goSUB =>
-							ALU_CTRL <= aSUB;
-						when goAND =>
-							ALU_CTRL <= aAND;
-						when goORR =>
-							ALU_CTRL <= aOR;
-						when goXOR =>
-							ALU_CTRL <= aXOR;
 						when goMOV =>
-							ALU_CRTL <= aMOV;
+							ALU_CTRL <= aMOV;
+							
 						when goMOVT =>
 							ALU_CTRL <= aMOVT;
+
+						when goB =>
+							
+						when goJMP =>
+							
+						when goLDR =>
+							ALU_CTRL <= aADD;
+							RAM_WE <= '0';
+							
+						when goSTR =>
+							ALU_CTRL <= aADD;
+							RAM_WE <= '1';
+						
+						when goPUSH =>
+							ALU_CTRL <= aMOV;
+							RAM_WE <= '1';
+						
+						when goPOP =>
+							ALU_CTRL <= aMOV;
+							RAM_wE <= '0';
+							
+						when goADD =>
+							ALU_CTRL <= aADD;
+							
+						when goADDC =>
+							ALU_CTRL <= aADD;
+							
+						when goSUB =>
+							ALU_CTRL <= aSUB;
+						
+						when goSUBC =>
+							ALU_CTRL <= aSUB;
+							
+						when goSHIFT =>
+							ALU_CTRL <= aSHIFT;
+							
+						when goAND =>
+							ALU_CTRL <= aAND;
+							
+						when goORR =>
+							ALU_CTRL <= aOR;
+							
+						when goXOR =>
+							ALU_CTRL <= aXOR;
+							
 						when others =>
-							alu_ctrl <= aMOV;
+							ALU_CTRL <= aMOV;
 					end case;
-					state <= EXECUTE;
+					STATE <= EXECUTE;
+
 				when EXECUTE =>
 					case grop is
-						when goADD | goSUB | goAND | goORR | goXOR =>
-							reg_we <= '1';
-							mem_we <= '0';
-						when goLDR =>
-							reg_we <= '1';
-							mem_we <= '0';
-						when goSTR =>
-							reg_we <= '0';
-							mem_we <= '1';
 						when others =>
-							reg_we <= '0';
-							mem_we <= '0';
+						
 					end case;
 					pc_we <= '0';
 					state <= FETCH;

@@ -1,21 +1,30 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -o /home/ise/projeto_cpu/cpu_module_tb_isim_beh.exe -prj /home/ise/projeto_cpu/cpu_module_tb_beh.prj work.cpu_module_tb 
+Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -relaunch -intstyle "ise" -incremental -o "/home/ise/projeto_cpu/testbench_isim_beh.exe" -prj "/home/ise/projeto_cpu/testbench_beh.prj" "work.testbench" 
 ISim P.20131013 (signature 0xfbc00daa)
 Number of CPUs detected in this system: 1
 Turning on mult-threading, number of parallel sub-compilation jobs: 0 
 Determining compilation order of HDL files
+Parsing VHDL file "/home/ise/projeto_cpu/libcpu.vhd" into library work
+Parsing VHDL file "/home/ise/projeto_cpu/register_unit_mod.vhd" into library work
+Parsing VHDL file "/home/ise/projeto_cpu/control_unit_mod.vhd" into library work
+Parsing VHDL file "/home/ise/projeto_cpu/alu_mod.vhd" into library work
 Parsing VHDL file "/home/ise/projeto_cpu/cpu_module.vhd" into library work
-Parsing VHDL file "/home/ise/projeto_cpu/cpu_module_tb.vhd" into library work
+Parsing VHDL file "/home/ise/projeto_cpu/cpu_testbench.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 95304 KB
-Fuse CPU Usage: 350 ms
+Fuse Memory Usage: 96968 KB
+Fuse CPU Usage: 270 ms
 Compiling package standard
 Compiling package std_logic_1164
+Compiling package numeric_std
+Compiling package libcpu
+Compiling architecture behavioral of entity alu_mod [alu_mod_default]
+Compiling architecture behavioral of entity control_unit_mod [control_unit_mod_default]
+Compiling architecture behavioral of entity register_unit_mod [register_unit_mod_default]
 Compiling architecture behavioral of entity cpu_module [cpu_module_default]
-Compiling architecture behavior of entity cpu_module_tb
+Compiling architecture behavior of entity testbench
 Time Resolution for simulation is 1ps.
-Compiled 5 VHDL Units
-Built simulation executable /home/ise/projeto_cpu/cpu_module_tb_isim_beh.exe
-Fuse Memory Usage: 103924 KB
-Fuse CPU Usage: 370 ms
-GCC CPU Usage: 340 ms
+Compiled 13 VHDL Units
+Built simulation executable /home/ise/projeto_cpu/testbench_isim_beh.exe
+Fuse Memory Usage: 113924 KB
+Fuse CPU Usage: 340 ms
+GCC CPU Usage: 90 ms
