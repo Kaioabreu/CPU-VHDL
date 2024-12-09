@@ -23,7 +23,7 @@ end control_unit_mod;
 
 architecture Behavioral of control_unit_mod is
 
-    type state_type is (FETCH, DECODE, EXECUTE, WRITEBACK);
+    type state_type is (FETCH, FETCH2, FETCH3, FETCH4, DECODE, EXECUTE, WRITEBACK);
     signal state : state_type := FETCH;
 
     signal cir : word;
@@ -38,20 +38,27 @@ begin
             ALU_CTRL <= aMOV;
             RAM_WE <= '0';
             REG_WE <= '0';
-            PC_WE <= '0';
+            PC_WE <= '1';
 				PC_NEXT <= x"0040";
             
         elsif rising_edge(CLK) then
             case state is
                 when FETCH =>
-                    PC_WE <= '1';
-                    --PC_NEXT <= PC;
+                    PC_WE <= '0';
+                    PC_NEXT <= STD_LOGIC_VECTOR(unsigned(PC)+1);
                     RAM_WE <= '0';
                     REG_WE <= '0';
-                    state <= DECODE;
-                    
+                    state <= FETCH2;
+					 when FETCH2 =>
+						  state <= FETCH3;
+						  
+					 when FETCH3 =>
+						  state <= FETCH4;
+					 when FETCH4 =>
+						  state <= DECODE;
+						  cir <= IR;
                 when DECODE =>
-                    cir <= IR;
+                    
                     case grop is
                         when goMOV   => ALU_CTRL <= aMOV;
                         when goMOVT  => ALU_CTRL <= aMOVT;
@@ -74,9 +81,9 @@ begin
                     state <= EXECUTE;
 
                 when EXECUTE =>
+						  PC_WE <= '1';
                     state <= WRITEBACK;
 					 when WRITEBACK =>
-						  PC_WE <= '0';
 						  state <= FETCH;
             end case;
         end if;
