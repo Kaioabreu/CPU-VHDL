@@ -54,6 +54,10 @@ architecture Behavioral of RAM_8x8192 is
         58 => x"FFFF",
         59 => x"8200",
         60 => x"FFFF",
+        64 => x"0205",                -- 0x0010: MOV r2, #5
+        65 => x"0307",                -- 0x0011: MOV r3, #7
+        66 => x"8123",                -- 0x0012: ADD r1, r2, r3
+        67 => x"0000",                -- 0x0013: HALT (NOP)
         128 => x"1890",
         255 => x"FFFF",
         others => x"F0F0"

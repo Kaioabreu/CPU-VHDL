@@ -22,6 +22,7 @@ end cpu_module;
 architecture Behavioral of cpu_module is
 
     signal PC         : word := (others => '0');
+	 signal PC_NEXT    : word := (others => '0');
     signal IR         : word;
     signal DATA_BUS   : word;
     signal REG_WE     : STD_LOGIC := '0';
@@ -44,6 +45,14 @@ architecture Behavioral of cpu_module is
 
     signal DISPLAY_VAL   : STD_LOGIC_VECTOR(3 downto 0);
 
+   -- Banco de registradores
+   signal R_ADDR_A   : nibble := (others => '0'); 
+   signal R_ADDR_B   : nibble := (others => '0'); 
+   signal W_ADDR     : nibble := (others => '0'); 
+   signal W_DATA     : word := (others => '0');                          
+   signal R_DATA_A   : word := (others => '0');                          
+   signal R_DATA_B   : word := (others => '0');
+
 begin
 
     alu_inst : entity work.alu_mod
@@ -65,8 +74,22 @@ begin
             ALU_CTRL => ALU_CTRL,
             RAM_WE   => RAM_WE,
             REG_WE   => REG_WE,
-            PC_WE    => PC_WE
+            PC_WE    => PC_WE,
+				PC_NEXT  => PC_NEXT
         );
+		  
+	ru_inst : entity work.register_unit_mod
+      Port map (
+         CLK       => CLK,
+         RESET     => RESET,
+         REG_WE    => REG_WE,
+         R_ADDR_A  => R_ADDR_A,
+         R_ADDR_B  => R_ADDR_B,
+         W_ADDR    => W_ADDR,
+         W_DATA    => W_DATA,
+         R_DATA_A  => R_DATA_A,
+         R_DATA_B  => R_DATA_B
+      );
 
     u_RAM : entity work.RAM_8x8192
         port map(
@@ -99,16 +122,34 @@ begin
             tecla    => tecla_ps2,
             valido   => tecla_valida
         );
+	
+	 u_display : entity work.display_mod
+        port map(
+            num => DISPLAY_VAL,
+            seg => seg
+        );
 
     DATA_BUS <= x"00" & tecla_ps2 when tecla_valida = '1' else (others => '0');
     lcd_ir <= RAM_DATA(7 downto 0);
 
     DISPLAY_VAL <= ALU_RESULT(3 downto 0);
-
-    u_display : entity work.display_mod
-        port map(
-            num => DISPLAY_VAL,
-            seg => seg
-        );
+	 
+    process(CLK, RESET)
+    begin
+        if RESET = '1' then
+            PC <= x"0040";
+            IR <= (others => '0');
+        elsif rising_edge(CLK) then
+        end if;
+    end process;
+	 
+    process(PC_WE, PC)
+    begin
+        if PC_WE = '1' then
+				PC <= PC_NEXT;
+            IR <= RAM_DATA;
+            RAM_ADDR <= PC;  -- Durante FETCH, endereço é o PC
+        end if;
+    end process;
 
 end Behavioral;

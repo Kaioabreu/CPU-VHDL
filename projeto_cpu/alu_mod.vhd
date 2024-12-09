@@ -62,7 +62,7 @@ begin
                 Y_internal <= (others => '0');
         end case;
         
-        if (Y_internal = (others => '0')) then
+        if (Y_internal(15 downto 0) = "0000000000000000") then
             is_zero <= '1';
         else
             is_zero <= '0';
