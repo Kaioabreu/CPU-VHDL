@@ -37,9 +37,9 @@ architecture Behavioral of cpu_module is
     signal ALU_B      : word;
 
     signal lcd_ir      : std_logic_vector(7 downto 0);
-    signal lcd_pos_255 : std_logic_vector(15 downto 0);
+    signal lcd_pos_255 : word;
 
-    signal tecla_ps2     : STD_LOGIC_VECTOR(7 downto 0);
+    signal tecla_ps2     : byte;
     signal tecla_valida  : STD_LOGIC;
 
     signal DISPLAY_VAL   : STD_LOGIC_VECTOR(3 downto 0);
@@ -72,7 +72,7 @@ begin
         port map(
             CLK     => CLK,
             DIN     => RAM_DATA,
-            ADDR    => RAM_ADDR,
+            ADDR    => RAM_ADDR(12 downto 0),
             WE      => RAM_WE,
             DOUT    => RAM_DATA,
             POS_255 => lcd_pos_255
@@ -100,7 +100,7 @@ begin
             valido   => tecla_valida
         );
 
-    DATA_BUS <= "00000000" & tecla_ps2 when tecla_valida = '1' else (others => '0');
+    DATA_BUS <= x"00" & tecla_ps2 when tecla_valida = '1' else (others => '0');
     lcd_ir <= RAM_DATA(7 downto 0);
 
     DISPLAY_VAL <= ALU_RESULT(3 downto 0);

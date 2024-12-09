@@ -5,5 +5,11 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
+<msg type="error" file="HDLCompiler" num="136" delta="unknown" >"/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd" Line 65: OTHERS choice cannot be used in unconstrained array aggregate.
+</msg>
+
+<msg type="error" file="Simulator" num="777" delta="unknown" >Static elaboration of top level VHDL design unit <arg fmt="%s" index="1">testbench</arg> in library <arg fmt="%s" index="2">work</arg> failed
+</msg>
+
 </messages>
 

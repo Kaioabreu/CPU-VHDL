@@ -1,42 +1,56 @@
--- TestBench Template 
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-  LIBRARY ieee;
-  USE ieee.std_logic_1164.ALL;
-  USE ieee.numeric_std.ALL;
+library work;
+use work.libcpu.all;
 
-  ENTITY testbench IS
-  END testbench;
+entity testbench is
+end testbench;
 
-  ARCHITECTURE behavior OF testbench IS 
+architecture behavior of testbench is
 
--- Componentes do DUT (Device Under Test)
     component cpu_module
         Port (
-            CLK  : in  STD_LOGIC;
-            RESET: in  STD_LOGIC;
-            LCD  : out STD_LOGIC_VECTOR(7 downto 0)
+            CLK        : in  STD_LOGIC;
+            RESET      : in  STD_LOGIC;
+            PS2_DATA   : in  STD_LOGIC;
+            PS2_CLK    : in  STD_LOGIC;
+            lcd_e      : out STD_LOGIC;
+            lcd_rs     : out STD_LOGIC;
+            lcd_rw     : out STD_LOGIC;
+            sf_d       : out STD_LOGIC_VECTOR(3 downto 0);
+            seg        : out STD_LOGIC_VECTOR(6 downto 0)
         );
     end component;
 
-    -- Sinais para o DUT
-    signal CLK       : STD_LOGIC := '0';
-    signal RESET     : STD_LOGIC := '1';
-    signal LCD       : STD_LOGIC_VECTOR(7 downto 0);
+    signal CLK        : STD_LOGIC := '0';
+    signal RESET      : STD_LOGIC := '1';
+    signal PS2_DATA_tb: STD_LOGIC := '0';
+    signal PS2_CLK_tb : STD_LOGIC := '0';
+    signal lcd_e_tb   : STD_LOGIC;
+    signal lcd_rs_tb  : STD_LOGIC;
+    signal lcd_rw_tb  : STD_LOGIC;
+    signal sf_d_tb    : STD_LOGIC_VECTOR(3 downto 0);
+    signal seg_tb     : STD_LOGIC_VECTOR(6 downto 0);
 
-    -- Clock period
     constant CLK_PERIOD : time := 10 ns;
 
 begin
 
-    -- Instância do DUT
     uut: cpu_module
         Port map (
-            CLK  => CLK,
-            RESET => RESET,
-            LCD  => LCD
+            CLK      => CLK,
+            RESET    => RESET,
+            PS2_DATA => PS2_DATA_tb,
+            PS2_CLK  => PS2_CLK_tb,
+            lcd_e    => lcd_e_tb,
+            lcd_rs   => lcd_rs_tb,
+            lcd_rw   => lcd_rw_tb,
+            sf_d     => sf_d_tb,
+            seg      => seg_tb
         );
 
-    -- Geração do Clock
     clk_process : process
     begin
         while true loop
@@ -47,22 +61,13 @@ begin
         end loop;
     end process;
 
-    -- Estímulos de Teste
     stim_proc: process
     begin
-        -- Inicialização
-        wait for 20 ns; -- Espera para estabilizar o DUT
-        RESET <= '0'; -- Libera o RESET
-
-        -- Teste 1: Verificar incremento do PC
-        wait for 100 ns; -- Observe o PC após alguns ciclos
-
-        -- Teste 2: Simular uma instrução de salto (se configurada na CU)
-        -- Adicione sinais específicos no caso de saltos ou branches
-
-        wait for 200 ns; -- Observa mais instruções
+        wait for 20 ns;
+        RESET <= '0';
+        wait for 200 ns;
         assert false report "Fim da Simulação" severity note;
         wait;
     end process;
 
-  END;
+end behavior;

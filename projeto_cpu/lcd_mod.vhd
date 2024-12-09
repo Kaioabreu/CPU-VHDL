@@ -1,26 +1,9 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    11:23:07 12/08/2024 
--- Design Name: 
--- Module Name:    lcd_mod - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: Módulo LCD corrigido para incluir porta pos_255.
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Revision 0.02 - Adicionada porta pos_255
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+
+library work;
+use work.libcpu.all;
 
 entity lcd_mod is
     port(
@@ -30,14 +13,13 @@ entity lcd_mod is
         lcd_rs  : out  STD_LOGIC;
         lcd_rw  : out  STD_LOGIC;
         sf_d    : out  STD_LOGIC_VECTOR(3 downto 0);
-        ir      : in   STD_LOGIC_VECTOR(7 downto 0);  -- Instrução da RAM
-        pos_255 : in   STD_LOGIC_VECTOR(15 downto 0)  -- Adicionado: Valor do endereço 255 da RAM
+        ir      : in   STD_LOGIC_VECTOR(7 downto 0);
+        pos_255 : in   word
     );
 end lcd_mod;
 
 architecture Behavioral of lcd_mod is
 
-    -- Função para converter string (16 chars) em std_logic_vector(127 downto 0)
     function str2slv(S : string) return std_logic_vector is
         variable result : std_logic_vector(S'length*8-1 downto 0);
     begin
@@ -47,7 +29,7 @@ architecture Behavioral of lcd_mod is
         return result;
     end function;
 
-    type TEXT_MAP_ROM_t is array (0 to 255) of std_logic_vector(8*16-1 downto 0); -- 16 chars * 8 bits = 128 bits
+    type TEXT_MAP_ROM_t is array (0 to 255) of std_logic_vector(127 downto 0);
     constant TEXT_MAP_ROM : TEXT_MAP_ROM_t := (
         0    => str2slv("add RA, RB      "),
         1    => str2slv("add RA, RD      "),
@@ -92,7 +74,7 @@ architecture Behavioral of lcd_mod is
 
     signal LCD_E_REG, LCD_RS_REG, LCD_RW_REG : STD_LOGIC := '0';
     signal SF_D_REG : STD_LOGIC_VECTOR(3 downto 0) := (others => '0');
-    signal TEXT_DISPLAY : std_logic_vector(8*16-1 downto 0) := (others => '0');
+    signal TEXT_DISPLAY : std_logic_vector(127 downto 0) := (others => '0');
     signal INIT_COUNTER : unsigned(4 downto 0) := (others => '0');
     signal RESET_DONE   : std_logic := '0';
 
@@ -133,7 +115,6 @@ begin
                         LCD_RS_REG <= '1';
                         LCD_RW_REG <= '0';
                         counter := counter + 1;
-
                         if counter = 12 then
                             counter := (others => '0');
                             STATE <= write_b;
@@ -144,7 +125,6 @@ begin
                         LCD_RS_REG <= '1';
                         LCD_RW_REG <= '0';
                         counter := counter + 1;
-
                         if counter = 2000 then
                             counter := (others => '0');
                             if INIT_COUNTER = 15 then

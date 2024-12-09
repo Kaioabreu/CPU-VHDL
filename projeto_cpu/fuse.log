@@ -7,10 +7,11 @@ Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/libcpu.
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/teclado_mod.vhd" into library work
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/ram_mod.vhd" into library work
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/lcd_mod.vhd" into library work
+Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/display_mod.vhd" into library work
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/control_unit_mod.vhd" into library work
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd" into library work
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_module.vhd" into library work
 Parsing VHDL file "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_testbench.vhd" into library work
 Starting static elaboration
-ERROR:HDLCompiler:1156 - "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/cpu_testbench.vhd" Line 17: Formal port <LCD> does not exist in entity <cpu_module>.  Please compare the definition of block <cpu_module> to its component declaration and its instantion to detect the mismatch.
+ERROR:HDLCompiler:136 - "/home/tage/CompDig/projeto_final/CPU-VHDL/projeto_cpu/alu_mod.vhd" Line 65: OTHERS choice cannot be used in unconstrained array aggregate.
 ERROR:Simulator:777 - Static elaboration of top level VHDL design unit testbench in library work failed
